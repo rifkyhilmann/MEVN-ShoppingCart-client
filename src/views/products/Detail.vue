@@ -1,16 +1,16 @@
 <template>
     <div>
       <div id="page-wrap">
-        <div class="img">
-          <img src="" alt="">
+        <div id="img-wrap">
+          <img :src="product.imageUrl" alt="">
         </div>
         <div id="product-details">
-            <h1>Dark Wallet</h1>
-            <h3 id="price">Rp.123.000</h3>
-            <p>Average rating : 5.0</p>
+            <h1>{{ product.name }}</h1>
+            <h3 id="price">Rp{{ product.price }}</h3>
+            <p>Average rating : {{ product.averageRating }}</p>
             <button id="add-to-cart">Add to Cart</button>
             <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Autem omnis quos nam repudiandae neque provident debitis veritatis, reprehenderit doloremque culpa. Reiciendis illo illum nostrum nobis tenetur sequi tempora amet neque.
+             {{ product.description }}
             </p>
         </div>
       </div>
@@ -18,8 +18,26 @@
 </template>
 
 <script>
+import { products } from '../../data/data-seed'
+
+
 export default {
     name : "DetailProductPage",
+    data() {
+      return {
+        products 
+      }
+    },
+    computed : {
+      product() {
+        return this.products.find((p) => {
+          return p.id === this.$route.params.id
+        })
+      }
+    },
+    mounted() {
+      console.log(this.product)
+    },
 }
 
 </script>
