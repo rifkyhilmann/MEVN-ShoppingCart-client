@@ -2,18 +2,11 @@
   <div>
     <div id="page-wrap">
         <h1>Shopping Cart</h1>
-        <div 
-          class="product-container"
-          v-for="item in cartItems"
-          :key="item.id"
-        >
-          <img :src="item.imageUrl" class="product-image" alt="">
-          <div class="details-wrap">
-            <h3>{{ item.name }}</h3>
-            <h3>Rp{{ item.price }}</h3>
-          </div>
-          <button class="remove-button">Remove</button>
-        </div>
+        <ItemCart 
+          v-for="items in cartItems"
+          :key="items.id"
+          :item="items"
+        />
         <h3 id="total-price">Total : {{ totalPrice }}</h3>
         <button id="checkout-button">Checkout</button>
     </div>
@@ -21,10 +14,14 @@
 </template>
 
 <script>
+import ItemCart from '@/components/ItemCart.vue';
 import { cartItems } from '../../data/data-seed'
 
 export default {
   name: "CartPage",
+  components : {
+    ItemCart,
+  },  
   data () {
     return {
       cartItems: cartItems // Make sure to return an object
