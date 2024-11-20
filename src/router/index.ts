@@ -3,6 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import Product  from '../views/products/Index.vue'
 import ProductDetail from '../views/products/Detail.vue'
 import Cart from '../views/cart/Index.vue'
+import NotFound from '../views/errors/404.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes: Array<RouteConfig> = [
     path: '/cart',
     name: 'Cart',
     component: Cart
+  },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound
   },
 ]
 
