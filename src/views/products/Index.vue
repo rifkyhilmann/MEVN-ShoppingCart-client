@@ -13,19 +13,23 @@
 </template>
 
 <script>
-import { products } from '../../data/data-seed';
+import axios from 'axios';
 import ProductItem from '@/components/ProductItem.vue';
 
 export default {
   name: "ProductPage",
-  components: { // Ubah 'component' menjadi 'components'
+  components: { 
     ProductItem
   },
 
   data() {
     return {
-      products
+      products : []
     };
+  },
+  async created() {
+    const result = await axios.get(`http://localhost:5000/api/products`)
+    this.products = result.data;
   }
 };
 </script>

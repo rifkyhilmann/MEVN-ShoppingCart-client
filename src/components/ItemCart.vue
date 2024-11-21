@@ -2,12 +2,15 @@
     <div 
         class="product-container"
     >
-        <img :src="item.imageUrl" class="product-image" alt="">
+        <img :src="`http://localhost:5000${item.imageUrl}`" class="product-image" alt="">
         <div class="details-wrap">
             <h3>{{ item.name }}</h3>
             <h3>Rp{{ item.price }}</h3>
         </div>
-        <button class="remove-button">Remove</button>
+        <button 
+          class="remove-button"
+          @click="$emit('remove-item', item.code)"
+        >Remove</button>
     </div>
 </template>
   

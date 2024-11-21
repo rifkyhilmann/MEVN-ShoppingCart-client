@@ -2,13 +2,13 @@
   <div>
     <div id="page-wrap" v-if="product">
       <div id="img-wrap">
-        <img :src="product.imageUrl" alt="" />
+        <img :src="`http://localhost:5000${product.imageUrl}`" alt="" />
       </div>
       <div id="product-details">
         <h1>{{ product.name }}</h1>
         <h3 id="price">Rp{{ product.price }}</h3>
         <p>Average rating : {{ product.averageRating }}</p>
-        <button id="add-to-cart">Add to Cart</button>
+        <button id="add-to-cart" @click="addToCart(product.code)">Add to Cart</button>
         <p>{{ product.description }}</p>
       </div>
     </div>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { products } from '../../data/data-seed'
+import axios from 'axios';
 import NotFound from '../errors/404.vue'
 
 export default {
@@ -29,19 +29,24 @@ export default {
   },
   data() {
     return {
-      products,
+      product : {},
     };
   },
-  computed: {
-    product() {
-      return this.products.find((p) => {
-        // Pastikan tipe id cocok (number vs string)
-        return String(p.id) === String(this.$route.params.id);
-      });
-    },
+  methods : {
+    async addToCart(product) {
+      const result = await axios.post('http://localhost:5000/api/orders/user/1/add', {
+        product : product
+      })
+
+      if(result.status === 200) {
+        alert("berhasil menambahkan")
+      }
+    }
   },
-  mounted() {
-    console.log(this.product);
+  async created() {
+    const code = this.$route.params.id
+    const result = await axios.get(`http://localhost:5000/api/products/${code}`)
+    this.product = result.data;
   },
 };
 </script>
